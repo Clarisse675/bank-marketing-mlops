@@ -12,7 +12,7 @@ bank_schema = pa.DataFrameSchema(
 "marital": pa.Column(str, pa.Check.isin(["married", "single", "divorced"])),
 "education": pa.Column(str, pa.Check.isin(["primary", "secondary", "tertiary", "unknown"])),
 "default": pa.Column(str, pa.Check.isin(OUI_NON)),
-"balance": pa.Column(int),
+"balance": pa.Column(int, pa.Check.in_range(-10000, 500000)),
 "housing": pa.Column(str, pa.Check.isin(OUI_NON)),
 "loan": pa.Column(str, pa.Check.isin(OUI_NON)),
 "contact": pa.Column(str, pa.Check.isin(["cellular", "telephone", "unknown"])),

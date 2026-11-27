@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 from src.mlops_projet.data.load import DATA_PATH, load_bank_data
 FEATURES_PATH = Path(DATA_PATH).parent / "features.parquet"
+
 def build_features(df):
     """Transforme des données clients en features pour le modèle."""
     # duration : connue seulement après l'appel (fuite) ; y : la cible
@@ -14,10 +15,15 @@ def build_features(df):
         bins=[17, 29, 45, 60, 100],
         labels=["18-29", "30-45", "46-60", "61+"],
     ).astype(str)
+    features["a_un_credit"] = (
+        (df["housing"] == "yes") | (df["loan"] == "yes")
+    ).astype(int)
     return features
+
 def build_target(df):
     """La cible : 1 si le client a souscrit, 0 sinon."""
     return (df["y"] == "yes").astype(int)
+
 def main():
     df = load_bank_data()
     table = build_features(df)
