@@ -27,3 +27,9 @@ def test_cible_inconue(df):
     casse[0,"y"] = "peut-être"
     with pytest.raises(pa.errors.SchemaErrors):
         validate_bank_data(casse)
+
+def test_balance_aberrante(df):
+    casse = df.copy()
+    casse.loc[0, "balance"] = -50000
+    with pytest.raises(pa.errors.SchemaErrors):
+        validate_bank_data(casse)
